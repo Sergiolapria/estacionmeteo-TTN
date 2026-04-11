@@ -16,7 +16,7 @@ uint32_t devAddr =  ( uint32_t )0x260BCE52;
 uint16_t userChannelsMask[6]={ 0x00FF,0x0000,0x0000,0x0000,0x0000,0x0000 };
 LoRaMacRegion_t loraWanRegion = ACTIVE_REGION;
 DeviceClass_t  loraWanClass = LORAWAN_CLASS;
-uint32_t appTxDutyCycle = 3000;//5minutos
+uint32_t appTxDutyCycle = 300000;//5minutos
 bool overTheAirActivation = LORAWAN_NETMODE;
 bool loraWanAdr = LORAWAN_ADR;
 bool keepNet = LORAWAN_NET_RESERVE;
@@ -32,12 +32,12 @@ static void prepareTxFrame( uint8_t port )
 {
 	float temperaure=aht.getTemperature();
 	float humidity=aht.getHumidity();
-	Serial.println("Temperatura: "+String(temperaure)+" Humedad: "+String(humidity));
+	//Serial.println("Temperatura: "+String(temperaure)+" Humedad: "+String(humidity));
 	int rawTemp=100*temperaure;
 	int rawHum=100*humidity;
 	//
 	float pressure=bmp.readPressure();
-	Serial.println("Presion: "+String(pressure));//Pa
+	//Serial.println("Presion: "+String(pressure));//Pa
 	int rawPress=100*pressure;
 	unsigned char *puc;
 	appDataSize = 12;
