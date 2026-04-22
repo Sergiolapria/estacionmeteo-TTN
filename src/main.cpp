@@ -2,8 +2,7 @@
 #include "LoRaWan_APP.h"
 #include <Wire.h>
 #include <SPI.h>
-#include <AHT20.h>
-
+#include <AHT20.h>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 #include <Adafruit_BMP280.h>
 /* OTAA para*/
 uint8_t devEui[] = {0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x07, 0x6D, 0x82};
@@ -46,7 +45,7 @@ static void prepareTxFrame( uint8_t port )
 	appData[0] = puc[0];
 	appData[1] = puc[1];
 	appData[2] = puc[2];
-	appData[3] = puc[3];
+	appData[3] = puc[3]; 
 
 	puc=(unsigned char*)&rawHum;
 	appData[4] = puc[0];
@@ -59,7 +58,15 @@ static void prepareTxFrame( uint8_t port )
 	appData[9] = puc[1];
 	appData[10] = puc[2];
 	appData[11] = puc[3];
-
+	Serial.println("Temperatura: "+String(temperaure));
+	Serial.print(puc[0]);
+	Serial.print(" ");
+	Serial.print(puc[1]);
+	Serial.print(" ");
+	Serial.print(puc[2]);
+	Serial.print(" ");
+	Serial.print(puc[3]);
+	Serial.println();
 }
 void setup() {
 	boardInitMcu();
