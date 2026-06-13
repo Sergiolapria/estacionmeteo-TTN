@@ -38,8 +38,10 @@ static void prepareTxFrame( uint8_t port )
 	float pressure=bmp.readPressure();
 	//Serial.println("Presion: "+String(pressure));//Pa
 	int rawPress=100*pressure;
+	int Current=analogRead(ADC);//0-4095 sensibilidad 180 mV/A
+
 	unsigned char *puc;
-	appDataSize = 12;
+	appDataSize = 16;
 
 	puc=(unsigned char*)&rawTemp;
 	appData[0] = puc[0];
@@ -58,6 +60,13 @@ static void prepareTxFrame( uint8_t port )
 	appData[9] = puc[1];
 	appData[10] = puc[2];
 	appData[11] = puc[3];
+
+	puc=(unsigned char*)&Current;
+	appData[12] = puc[0];
+	appData[13] = puc[1];
+	appData[14] = puc[2];
+	appData[15] = puc[3];
+
 	Serial.println("Temperatura: "+String(temperaure));
 	Serial.print(puc[0]);
 	Serial.print(" ");
