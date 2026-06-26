@@ -4,7 +4,7 @@ function decodeUplink(input) {
   if (bytes.length < 4) {
     return {
       data: {},
-      errors: ["Se esperan al menos 4 bytes, recibidos: " + bytes.length]
+      errors: ["Se esperan al menos 3 bytes, recibidos: " + bytes.length]
     };
   }
   // Temperatura: bytes 0-1 (signed, big-endian) / 100
@@ -16,14 +16,11 @@ function decodeUplink(input) {
   var humidity = rawHum / 100;
   var rawPress=(input.bytes[11]<<24)+(input.bytes[10]<<16)+(input.bytes[9]<<8)+(input.bytes[8]);
   var pressure=rawPress/100;
-
-
   return {
     data:{
       field1: temperature,
       field2: humidity,
-      field3: pressure,
-     
+      field3: pressure
     }
 };
 }
