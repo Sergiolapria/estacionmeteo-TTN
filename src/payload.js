@@ -16,18 +16,14 @@ function decodeUplink(input) {
   var humidity = rawHum / 100;
   var rawPress=(input.bytes[11]<<24)+(input.bytes[10]<<16)+(input.bytes[9]<<8)+(input.bytes[8]);
   var pressure=rawPress/100;
-  var rawCurrent=(input.bytes[15]<<24)+(input.bytes[14]<<16)+(input.bytes[13]<<8)+(input.bytes[12]);
-  var Current_10=rawCurrent;
-  //mapeo lineal 
-  var m=5/(4095-2047);//pendiente
-  var Current=(Current_10-2047)*m;
- // var valorFinal=Math.max(0,Current);
+
+
   return {
     data:{
       field1: temperature,
       field2: humidity,
       field3: pressure,
-      field4: Current
+     
     }
 };
 }
