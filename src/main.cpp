@@ -4,6 +4,9 @@
 #include <SPI.h>
 #include <AHT20.h>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 #include <Adafruit_BMP280.h>
+
+
+
 /* OTAA para mini3 */
 uint8_t devEui[] = {0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x07, 0x6D, 0x82};
 uint8_t appEui[] = {0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0x01, 0x00};
@@ -15,16 +18,20 @@ uint32_t devAddr =  ( uint32_t )0x260BCE52;
 uint16_t userChannelsMask[6]={ 0x00FF,0x0000,0x0000,0x0000,0x0000,0x0000 };
 LoRaMacRegion_t loraWanRegion = ACTIVE_REGION;
 DeviceClass_t  loraWanClass = LORAWAN_CLASS;
-uint32_t appTxDutyCycle = 300000;//5minutos
+uint32_t appTxDutyCycle = 300000;//5 min
 bool overTheAirActivation = LORAWAN_NETMODE;
 bool loraWanAdr = LORAWAN_ADR;
 bool keepNet = LORAWAN_NET_RESERVE;
 bool isTxConfirmed = LORAWAN_UPLINKMODE;
 uint8_t appPort = 2;
 uint8_t confirmedNbTrials = 4;
+//
+
+
 //CONSTRUCTORES
 AHT20 aht;
 Adafruit_BMP280 bmp;
+
 
 
 static void prepareTxFrame( uint8_t port )
@@ -39,9 +46,17 @@ static void prepareTxFrame( uint8_t port )
 	//Serial.println("Presion: "+String(pressure));//Pa
 	int rawPress=100*pressure;
 	int Current=analogRead(ADC);//0-4095 sensibilidad 180 mV/A
+	//209 0 A
+	///OneWire management
+
+	////
+ /* Write function for only one byte on the OneWire bus. LSB transmitted first. /
+/ for (mask = 00000001; mask>0; mask <<= 1) { //iterate through bit mask with byte mask = 1; /
+/ Mesaures: Duration of slot one between two falling edge is 68 µs using parameters below. /
+/ Duration of slot zero between two falling edge is 69,6 µs using parameters below. */
 
 	unsigned char *puc;
-	appDataSize = 16;
+	appDataSize = 12;
 
 	puc=(unsigned char*)&rawTemp;
 	appData[0] = puc[0];
@@ -61,21 +76,10 @@ static void prepareTxFrame( uint8_t port )
 	appData[10] = puc[2];
 	appData[11] = puc[3];
 
-	puc=(unsigned char*)&Current;
-	appData[12] = puc[0];
-	appData[13] = puc[1];
-	appData[14] = puc[2];
-	appData[15] = puc[3];
 
-	Serial.println("Temperatura: "+String(temperaure));
-	Serial.print(puc[0]);
-	Serial.print(" ");
-	Serial.print(puc[1]);
-	Serial.print(" ");
-	Serial.print(puc[2]);
-	Serial.print(" ");
-	Serial.print(puc[3]);
-	Serial.println();
+
+
+	
 }
 void setup() {
 	boardInitMcu();
